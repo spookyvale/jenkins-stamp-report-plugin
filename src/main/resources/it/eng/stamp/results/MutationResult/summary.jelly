@@ -1,0 +1,15 @@
+ <?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:y="/lib/layout"
+	xmlns:l="/lib/hudson" xmlns:jm="/it/eng/stamp/tags"
+	css="/plugin/stamp-report-plugin/css/style.css">
+	<h4>
+		Mutator: ${it.mutator}
+		<jm:statusIcon it="${it.status}" />
+	</h4>
+	<h4>Tests:</h4>
+	<p>
+		${it.tests}
+	</p>
+	<p> Tests Run: ${it.testsRun}</p>
+	<j:if test="${it.status.toString().equals('KILLED')}"><p>Detected By: ${it.detectedBy}</p></j:if>
+</j:jelly>
