@@ -1,0 +1,18 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+	<l:layout title="trendlayout" css="/plugin/stamp-report-plugin/css/style.css">
+		<st:include it="${it.project}" page="sidepanel.jelly" />
+		<l:main-panel>
+			<h1>STAMP Report Performance Trend</h1>
+			<div>
+				<center>
+					<img class="trend" src="summarizerGraphCoverage" width="600"
+						height="440" />
+				</center>
+			</div>
+			<div>
+				<a href="../lastCompletedBuild/stamp-dashboard/">Last Report <l:icon class="icon-search icon-sm" /></a>
+			</div>
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

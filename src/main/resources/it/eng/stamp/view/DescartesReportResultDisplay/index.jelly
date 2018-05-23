@@ -1,0 +1,18 @@
+ <?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout">
+	<l:layout title="STAMP report" xmlns:jm="/it/eng/stamp/tags"
+		css="/plugin/stamp-report-plugin/css/style.css">
+		<st:include it="${it.build}" page="sidepanel.jelly" />
+		<l:main-panel>
+			<h2>${it.displayName}</h2>
+			<p>Overall Mutation Coverage: ${it.mutationCoverage*100}%</p>
+			<h2>Packages</h2>
+			<div class="title">
+				<j:forEach var="child" items="${it.children}">
+					<st:include page="summary.jelly" from="${child}"
+						it="${child}"></st:include>
+				</j:forEach>
+			</div>
+		</l:main-panel>
+	</l:layout>
+</j:jelly>
