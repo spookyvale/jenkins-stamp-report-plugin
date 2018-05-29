@@ -26,11 +26,17 @@ package it.eng.stamp.results;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.AbortException;
@@ -61,7 +67,7 @@ public class DescartesReportParser implements Serializable {
 		return "Descartes Report parser";
 	}
 
-	protected DescartesReport parse(List<File> reportFile, TaskListener listener)
+	protected DescartesReport parse(List<File> reportFile)
 			throws InterruptedException, IOException {
 
 		LOGGER.info("[Descartes Report] Parsing results.");
@@ -77,12 +83,26 @@ public class DescartesReportParser implements Serializable {
 				return null;
 			}
 			LOGGER.info("[Descartes Report] parsing " + f.getName());
-			return JSONParser.get().parseMapping(s, DescartesReport.class);
+			
+			JSONParser jsonParser = JSONParser.get();
+			jsonParser.setDeserializer(new ClassificationDeserializer(), MethodClassification.class);
+			return jsonParser.parseMapping(s, DescartesReport.class);
 
 		} catch (Exception ccm) {
 			throw new AbortException("Failed to parse JSON: " + ccm.getMessage());
 		}
 
+	}
+	
+	class ClassificationDeserializer implements JsonDeserializer<MethodClassification>
+	{
+		@Override
+		public MethodClassification deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+				throws JsonParseException {
+			String value = json.getAsString();
+			return MethodClassification.fromString(value);
+		}
+	  
 	}
 
 	static final class ParseResultCallable extends MasterToSlaveFileCallable<DescartesReport> {
@@ -92,7 +112,7 @@ public class DescartesReportParser implements Serializable {
 		private long buildTime;
 		private long nowMaster;
 		private String testResultLocations;
-		private TaskListener listener;
+
 
 
 		public ParseResultCallable(DescartesReportParser parserImpl, String testResultLocations,
@@ -101,7 +121,7 @@ public class DescartesReportParser implements Serializable {
 			this.testResultLocations = testResultLocations;
 			this.buildTime = buildTime;
 			this.nowMaster = nowMaster;
-			this.listener = listener;
+
 	
 		}
 
@@ -132,7 +152,7 @@ public class DescartesReportParser implements Serializable {
 						paths[0].getRemote(), Util.getTimeSpanString(localBuildTime - paths[0].lastModified())));
 			}
 
-			return parserImpl.parse(files, listener);
+			return parserImpl.parse(files);
 		}
 	}
 

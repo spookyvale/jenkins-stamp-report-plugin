@@ -2,6 +2,7 @@ package it.eng.stamp.util;
 
 import org.apache.commons.lang.StringUtils;
 
+
 public final class Constants {
 	public static final String STAMP_LOGO_LOCATION = "/plugin/stamp-report-plugin/img/stamp-logo.png";
 	public static final String PLUGIN_NAME = "stamp-dashboard";
@@ -32,4 +33,17 @@ public final class Constants {
 			// still would have to escape /, ? and so on
 		}
 	}
+	
+	public static long percent (int count, int total){
+		return Math.round((divide(count, total)*100));
+	}
+
+	public static double divide(int num1, int num2) {
+		return ((double) num1 /(double) num2);
+	}
+	
+	public static long toPercent (double val){
+		return Math.round(val*100);
+	}
+	
 }

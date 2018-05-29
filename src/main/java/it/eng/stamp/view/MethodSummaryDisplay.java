@@ -3,6 +3,7 @@ package it.eng.stamp.view;
 import java.util.Collection;
 
 import it.eng.stamp.STAMPReportBuildAction;
+import it.eng.stamp.results.MethodClassification;
 import it.eng.stamp.results.MethodResult;
 
 public class MethodSummaryDisplay extends AbstractMutationDisplay {
@@ -18,7 +19,7 @@ public class MethodSummaryDisplay extends AbstractMutationDisplay {
 		return result.getTests();
 	}
 
-	public String getClassification() {
+	public MethodClassification getClassification() {
 		return result.getClassification();
 	}
 	

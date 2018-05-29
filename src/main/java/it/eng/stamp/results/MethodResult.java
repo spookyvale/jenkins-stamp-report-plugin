@@ -23,7 +23,7 @@ public class MethodResult  implements Serializable {
 	@SerializedName("package")
 	private String pakg;
 	
-	private String classification;
+	private MethodClassification classification;
 	
 	private Collection<String> detected;
 	@SerializedName("not-detected")
@@ -51,7 +51,7 @@ public class MethodResult  implements Serializable {
 		return pakg;
 	}
 
-	public String getClassification() {
+	public MethodClassification getClassification() {
 		return classification;
 	}
 
@@ -87,7 +87,7 @@ public class MethodResult  implements Serializable {
 		this.pakg = pakg;
 	}
 
-	public void setClassification(String classification) {
+	public void setClassification(MethodClassification classification) {
 		this.classification = classification;
 	}
 

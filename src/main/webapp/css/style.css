@@ -35,6 +35,16 @@ table.source th {
     white-space: nowrap;
 }
 
+table.mini {
+    vertical-align: middle;
+    width: 100%;
+}
+
+table.mini td,th {
+    line-height: 1em;
+    vertical-align: middle;
+}
+
 div.title {
     padding: 0px;
     margin-top: 20px;

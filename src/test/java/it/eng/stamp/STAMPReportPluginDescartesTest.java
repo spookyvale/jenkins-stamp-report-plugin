@@ -12,7 +12,7 @@ public class STAMPReportPluginDescartesTest {
     @Rule
     public JenkinsRule jenkins = new JenkinsRule();
 	JenkinsRule.WebClient wc;
-    final String name = "mutations.json";
+
 
     @Test
     public void testDefaultConfigRoundtrip() throws Exception {
