@@ -6,7 +6,7 @@
 		<st:include it="${it.build}" page="sidepanel.jelly" />
 		<l:main-panel>
 			<h2>Package Details for ${it.displayName}</h2>
-			<p>Mutation Coverage: ${it.mutationCoverage*100}%</p>
+			<p>Mutation Coverage: ${it.mutationCoverage}%</p>
 			<table width="100%" class="source" border="1">
 				<thead>
 					<th>Class Name</th>

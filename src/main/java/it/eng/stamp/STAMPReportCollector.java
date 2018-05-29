@@ -29,6 +29,8 @@ import hudson.tasks.Recorder;
 import hudson.util.FormValidation;
 import it.eng.stamp.results.DescartesReport;
 import it.eng.stamp.results.DescartesReportParser;
+import it.eng.stamp.util.Constants;
+import it.eng.stamp.util.ReportMetrics;
 
 /**
  * @author VDIGIACO
@@ -113,7 +115,7 @@ public class STAMPReportCollector extends Recorder {
 		STAMPReportBuildAction buildAction = new STAMPReportBuildAction(build, report);
 		build.addAction(buildAction);
 
-		int buildCoverage = (int) report.getCoverageAverage() * 100;
+		int buildCoverage = (int) Constants.toPercent(report.getAverageForMetric(ReportMetrics.COVERAGE));;
 
 		if (treshold > 0 && (buildCoverage < treshold)) {
 			Result result = Result.UNSTABLE;

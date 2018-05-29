@@ -30,11 +30,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 import org.kohsuke.stapler.export.Exported;
-
 import hudson.model.Run;
 import it.eng.stamp.STAMPReportBuildAction;
+import it.eng.stamp.util.Constants;
+import it.eng.stamp.util.ReportMetrics;
 
 /**
  * Represents all the Report of Descartes with METHOD output format.
@@ -48,11 +50,12 @@ public class DescartesReport implements Serializable {
 	private List<MethodResult> methods = new ArrayList<MethodResult>();
 
 	private transient Map<String, Map<String, Map<String, MethodResult>>> indexed;
+	private transient Map<ReportMetrics, Double> metricsByKey;
+	private transient int mutationCount;
+	private transient int detectedCount;
+	private transient int notDetectedCount;
 
-	private transient int mutationCount = 0;
-	private transient int detectedCount = 0;
-	@SuppressWarnings("unused")
-	private transient int notDetectedCount = 0;
+	private transient Map<MethodClassification, Integer> counts;
 
 	private Analysis analysis;
 
@@ -124,14 +127,19 @@ public class DescartesReport implements Serializable {
 		return buildAction.getBuild();
 	}
 
-	public double getCoverageAverage() {
-		return (double) detectedCount / (double) mutationCount;
+	private void initTransient() {
+		metricsByKey = new HashMap<>();
+		mutationCount = 0;
+		detectedCount = 0;
+		notDetectedCount = 0;
+		counts = new HashMap<>();
 	}
 
 	public void doIndex() {
-		if(indexed != null)
+		if (indexed != null)
 			return;
 		indexed = new HashMap<>();
+		initTransient();
 		for (MethodResult m : methods) {
 			if (!indexed.containsKey(m.getPakg())) {
 				indexed.put(m.getPakg(), new HashMap<>());
@@ -143,7 +151,14 @@ public class DescartesReport implements Serializable {
 			mutationCount += m.getMutations().size();
 			detectedCount += m.getDetected().size();
 			notDetectedCount += m.getNotDetected().size();
+			counts.compute(m.getClassification(), (k, v) -> (v == null) ? 1 : ++v);
 		}
+
+		metricsByKey.put(ReportMetrics.COVERAGE, Constants.divide(detectedCount, mutationCount));
+		metricsByKey.put(ReportMetrics.PARTIALLY_TESTED,
+				Constants.divide(counts.get(MethodClassification.PARTIALLY_TESTED), methods.size()));
+		metricsByKey.put(ReportMetrics.PSEUDO_TESTED,
+				Constants.divide(counts.get(MethodClassification.PARTIALLY_TESTED), methods.size()));
 	}
 
 	public MethodResult getByFullName(String pkg, String className, String methodName) {
@@ -153,9 +168,29 @@ public class DescartesReport implements Serializable {
 			return null;
 		}
 	}
-	
+
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-	    in.defaultReadObject();     
-	    doIndex();
-	  }
+		in.defaultReadObject();
+		doIndex();
+	}
+
+	public double getAverageForMetric(ReportMetrics metricKey) {
+		return metricsByKey.getOrDefault(metricKey, (double) 0);
+	}
+
+	public int getClassificationCount(MethodClassification classification) {
+		return counts.getOrDefault(classification, 0);
+	}
+
+	public int getDetectedCount() {
+		return detectedCount;
+	}
+
+	public int getNotDetectedCount() {
+		return notDetectedCount;
+	}
+
+	public int getMutationCount() {
+		return mutationCount;
+	}
 }

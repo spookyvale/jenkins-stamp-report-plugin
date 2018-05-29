@@ -21,9 +21,10 @@
 		<j:set var="tr"
 			value="${it.project.lastCompletedBuild.getAction(it.class.classLoader.loadClass('it.eng.stamp.STAMPReportBuildAction'))}" />
 		<j:if test="${tr != null}">
-			<t:summary icon="/plugin/stamp-report-plugin/img/stamp-logo.png">
-				<a href="lastCompletedBuild/stamp-dashboard/">Latest STAMP Results</a>
+			<t:summary icon="/plugin/stamp-report-plugin/img/STAMP_Logo_RGB.svg">
+				<a href="lastCompletedBuild/stamp-dashboard/">Latest Results</a>
 				<st:nbsp />
+				<a href="stamp-dashboard/">Aggregated Results</a>
 			</t:summary>
 		</j:if>
 	</table>

@@ -68,10 +68,10 @@ public abstract class AbstractMutationDisplay implements ModelObject {
 		return name;
 	}
 
-	public float getMutationCoverage() {
-		return 	((float)detectedCount) /((float) mutationCount);
+	public long getMutationCoverage() {
+		return 	Constants.percent(detectedCount,mutationCount);
 	}
-
+	
 	public int getDetectedCount() {
 		return detectedCount;
 	}
