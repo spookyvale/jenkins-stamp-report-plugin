@@ -5,10 +5,10 @@ Developed in the context of [STAMP project](https://stamp.ow2.org/)
 * v0.1
 Initial support for PIT Descartes Reports
 
-
 ## Install
 * Install the plugin in Jenkins (for details on how to install a plugin see [here](https://jenkins.io/doc/book/managing/plugins/)).
-You can download the released hpi file or build from source with 
+
+* You can download the released hpi file or build from source with 
 
 ```
 mvn package
@@ -19,32 +19,17 @@ mvn package
 * Create a freestyle job that runs PIT Descartes and generates a report (currently supports METHODS output format)
 * Add a post build action to Generate STAMP Reporting views
 
-###Advanced options
+### Advanced options
 
 | Option  | Usage   | Default                                            |
 | -------- | ------  | --------------------------------------------------- |
 | `path`                   | search path for Descartes report files                                    | `target/pit-reports/*/mutations.json`    |
 | `coverage treshold`  | get a warning (mark the Build as _UNSTABLE_) if the Mutation coverage average is below a certain treshold |`0`  (disables the option) |
 
-
-
-The plugin is set by default to search for report files in the following search path
-```
-target/pit-reports/*/mutations.json
-```
-You can override this setting entering the advanced configuration menu.
-
-You can also set the plugin to get a warning (mark the Build as _UNSTABLE_) if the Mutation coverage average is below a certain treshold.
-
-Here is a snapshot of the configuration panel:
-
-![Config panel](docs/img/config.PNG?raw=true "Config panel")
- 
-
-
-
 ## Use 
-After building your project yo will see STAMP Report trends in the Project main page:
+Build your project. A project dashboard and a build dashboard are created to display STAMP Tools reports.
+
+After a couple of successful builds you will see STAMP Report trends in the Project main page:
 
 ![Overall View](docs/img/overall.PNG?raw=true "Overall View")
 
