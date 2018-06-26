@@ -1,9 +1,12 @@
 # Jenkins STAMP report plugin
+[![Build Status](https://travis-ci.org/STAMP-project/jenkins-stamp-report-plugin.svg?branch=master)](https://travis-ci.org/STAMP-project/jenkins-stamp-report-plugin)
+[![Coverage Status](https://coveralls.io/repos/github/STAMP-project/jenkins-stamp-report-plugin/badge.svg)](https://coveralls.io/github/STAMP-project/jenkins-stamp-report-plugin)
+
 Jenkins plugin to visualize reports from STAMP tools.
 Developed in the context of [STAMP project](https://stamp.ow2.org/)
 
-* v0.1
-Initial support for PIT Descartes Reports
+* v1.0
+PIT Descartes Reports
 
 ## Install
 * Install the plugin in Jenkins (for details on how to install a plugin see [here](https://jenkins.io/doc/book/managing/plugins/)).
