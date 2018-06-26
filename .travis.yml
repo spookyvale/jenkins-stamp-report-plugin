@@ -7,6 +7,3 @@ install: true
 
 script:
   - mvn clean package
-
-after_success:
-  - mvn test coveralls:report
