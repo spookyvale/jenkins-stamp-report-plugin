@@ -1,6 +1,5 @@
 # Jenkins STAMP report plugin
 [![Build Status](https://travis-ci.org/STAMP-project/jenkins-stamp-report-plugin.svg?branch=master)](https://travis-ci.org/STAMP-project/jenkins-stamp-report-plugin)
-[![Coverage Status](https://coveralls.io/repos/github/STAMP-project/jenkins-stamp-report-plugin/badge.svg)](https://coveralls.io/github/STAMP-project/jenkins-stamp-report-plugin)
 
 Jenkins plugin to visualize reports from STAMP tools.
 Developed in the context of [STAMP project](https://stamp.ow2.org/)
