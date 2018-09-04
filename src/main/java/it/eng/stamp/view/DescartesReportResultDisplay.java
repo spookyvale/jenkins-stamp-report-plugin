@@ -5,6 +5,7 @@ import java.awt.Paint;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -74,8 +75,12 @@ public class DescartesReportResultDisplay extends AbstractMutationDisplay {
 			return;
 		}
 
-		STAMPReportBuildAction previousPerformanceAction = previousBuild.getActions(STAMPReportBuildAction.class)
-				.get(0);
+		List<STAMPReportBuildAction> previousActions = previousBuild.getActions(STAMPReportBuildAction.class);
+		if(previousActions.size() == 0) {
+			return;
+		}
+
+		STAMPReportBuildAction previousPerformanceAction = previousActions.get(0);
 		if (previousPerformanceAction == null) {
 			return;
 		}
